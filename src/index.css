@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+:root {
+  --toastify-toast-min-height: 50px;
+}
+
+button[aria-label="close"] {
+  @apply border-2 rounded-full p-1  w-fit absolute top-1/2   -translate-y-1/2;
+}
+
+.baackroundImage {
+  @apply bg-[url(./assets/Images/bg-cercle.svg)];
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: contain;
+}
