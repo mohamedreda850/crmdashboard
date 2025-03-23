@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import avatar from "./../../../assets/Images/Avatar.png";
 import { useDispatch } from "react-redux";
 import { openDealModal } from "../../../redux/features/dealModalReducer";
+import { openCustomerModal } from "../../../redux/features/customerModalReducer";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -20,9 +21,11 @@ const NavBar = () => {
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
   };
-  const handleOpenModal = () => {
-
+  const handleOpenModalDeal = () => {
     dispatch(openDealModal("newDeal"));
+  };
+  const handleOpenModalCustomer = () => {
+    dispatch(openCustomerModal("newCustomer"));
   };
 
   return (
@@ -69,7 +72,7 @@ const NavBar = () => {
               >
                 <li>
                   <button
-                    onClick={handleOpenModal}
+                    onClick={handleOpenModalDeal}
                     className=" px-4 py-2 hover:bg-gray-100 w-full flex justify-between items-center border-t border-gray-200"
                   >
                     <span className="flex">
@@ -83,10 +86,13 @@ const NavBar = () => {
                   </button>
                 </li>
                 <li>
-                  <button className=" px-4 py-2 hover:bg-gray-100 w-full flex justify-between items-center border-t border-gray-200">
+                  <button
+                    onClick={handleOpenModalCustomer}
+                    className=" px-4 py-2 hover:bg-gray-100 w-full flex justify-between items-center border-t border-gray-200"
+                  >
                     <span className="flex">
                       <UsersRound size={18} className="me-2 text-#7E92A2" />{" "}
-                      Deal{" "}
+                      Customer
                     </span>
                     <MoveRight className="text-[#514EF3]" />
                   </button>

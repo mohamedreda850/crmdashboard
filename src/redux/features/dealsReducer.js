@@ -9,7 +9,6 @@ export const fetchDeals = createAsyncThunk("deals/feachDeals", async () => {
   return data;
 });
 export const addDeal = createAsyncThunk("deals/addDeal", async (dealData) => {
-  // Make sure DEALS_URLS.CREATE_DEAL is defined (often same as GET_DEALS)
   const { data } = await axiosInstance.post(DEALS_URLS.CREATE_DEAL, dealData);
   return data;
 });

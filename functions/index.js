@@ -3,10 +3,8 @@ const admin = require("firebase-admin");
 const express = require("express");
 const cors = require("cors");
 
-// Initialize Firebase Admin SDK
 admin.initializeApp();
 const db = admin.firestore();
-// Ignore undefined values in document data
 db.settings({ ignoreUndefinedProperties: true });
 
 const app = express();
@@ -14,18 +12,15 @@ app.use(cors({ origin: true }));
 app.use(express.json());
 
 /** ========== 1. Authentication / Login ========== **/
-// This endpoint generates a custom token for an existing user.
-// Note: Password verification is not done here. Typically, the client should use
-// signInWithEmailAndPassword() and send the ID token to your backend if needed.
+
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body; // Note: password not verified here.
+  const { email, password } = req.body; 
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
   }
 
   try {
     const userRecord = await admin.auth().getUserByEmail(email);
-    // Include additional claims (e.g., email) in the custom token.
     const additionalClaims = { email: userRecord.email };
     const customToken = await admin
       .auth()
@@ -38,9 +33,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-/** ========== 2. Deals Management ========== **/
-// Fields: roomImage (optional), streetAddress, city, state, zipCode,
-//         roomArea, numberOfPeople, appointmentDate, specialInstructions, price, progress
+
 
 // Create a deal
 app.post("/deals", async (req, res) => {
@@ -58,7 +51,6 @@ app.post("/deals", async (req, res) => {
     progress,
   } = req.body;
 
-  // Validate required fields (roomImage is optional)
   if (
     !streetAddress ||
     !city ||
@@ -136,7 +128,6 @@ app.get("/deals", async (req, res) => {
 });
 
 /** ========== 3. Customers Management ========== **/
-// Fields: avatar, firstName, lastName, email, phone, streetAddress, city, state, zipCode
 
 // Create a customer
 app.post("/customers", async (req, res) => {
@@ -225,7 +216,6 @@ app.get("/customers", async (req, res) => {
 });
 
 /** ========== 4. Tasks Management ========== **/
-// Fields: task, dueDate
 
 // Create a task
 app.post("/tasks", async (req, res) => {
@@ -286,5 +276,4 @@ app.get("/tasks", async (req, res) => {
   }
 });
 
-/** ========== Start API on Firebase Functions ========== **/
 exports.api = functions.https.onRequest(app);

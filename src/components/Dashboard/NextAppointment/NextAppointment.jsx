@@ -6,19 +6,23 @@ import { useDispatch } from "react-redux";
 
 const NextAppointment = ({ deals }) => {
   const dispatch = useDispatch();
-   const handleOpenModal = () => {
-  
-      dispatch(openDealModal("newDeal"));
-    };
+  const handleOpenModal = () => {
+    dispatch(openDealModal("newDeal"));
+  };
   const NoAppointments = () => (
-  <div className="bg-[#514EF3] w-[268px] h-[355px] flex flex-col items-center justify-between rounded-[12px] border border-[#EAEEF4] px-4 py-3">
-    <div className="flex flex-col items-center mt-32">
-      <CalendarDays className="text-[#D6E1E6] mb-2"/>
-      <p className="text-[#D6E1E6] text-sm">No upcoming appointments</p>
+    <div className="bg-[#514EF3] w-[268px] h-[355px] flex flex-col items-center justify-between rounded-[12px] border border-[#EAEEF4] px-4 py-3">
+      <div className="flex flex-col items-center mt-32">
+        <CalendarDays className="text-[#D6E1E6] mb-2" />
+        <p className="text-[#D6E1E6] text-sm">No upcoming appointments</p>
+      </div>
+      <button
+        onClick={handleOpenModal}
+        className="rounded-full bg-white w-full py-3 cursor-pointer"
+      >
+        Add Deal?
+      </button>
     </div>
-    <button onClick={handleOpenModal} className="rounded-full bg-white w-full py-3 cursor-pointer">Add Deal?</button>
-  </div>
-);
+  );
   if (!deals || deals.length === 0) {
     return <NoAppointments />;
   }

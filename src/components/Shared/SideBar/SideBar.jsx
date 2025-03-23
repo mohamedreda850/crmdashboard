@@ -5,25 +5,34 @@ import {
   CalendarDays,
   Component,
   ListChecksIcon,
+  LogOut,
   Settings,
   Users,
 } from "lucide-react";
 import logo from "./../../../assets/Images/Logo.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/features/authReducer";
 const SideBar = () => {
   const [colapsed, setColapsed] = useState(true);
   const toggleSideBar = () => {
     setColapsed(!colapsed);
   };
+  const dispatch = useDispatch();
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+  
   const iconDesign = "rounded-full bg-white p-2.5";
   return (
     <Sidebar
       collapsed={colapsed}
       rootStyles={{
         [`.${sidebarClasses.container}`]: {
-          height: "100%",
+          maxHeight: "100vh",
+          minHeight:"100%",
           backgroundColor: "#F6FAFDE5",
         },
       }}
@@ -68,6 +77,8 @@ const SideBar = () => {
               <Users size={20} />
             </div>
           }
+          component={<Link to="/dashboard/customers" />}
+
         >
           {" "}
           Customers{" "}
@@ -111,6 +122,16 @@ const SideBar = () => {
         >
           {" "}
           settings{" "}
+        </MenuItem>
+        <MenuItem
+          icon={
+            <div className={iconDesign}>
+              <LogOut  size={20} />
+            </div>
+          }
+ onClick={handleLogout}        >
+          {" "}
+          Logout{" "}
         </MenuItem>
       </Menu>
     </Sidebar>

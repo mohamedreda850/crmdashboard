@@ -15,8 +15,6 @@ const DealModal = () => {
   const dealModalState = useSelector((state) => state.dealModal);
   const { isOpen, modalType, dealData } = dealModalState;
 
-  console.log("DealModal Redux state:", dealModalState);
-
   const {
     register,
     handleSubmit,
@@ -45,7 +43,6 @@ const DealModal = () => {
       setValue("zipCode", dealData.zipCode);
       setValue("roomArea", dealData.roomArea);
       setValue("numberOfPeople", dealData.numberOfPeople);
-      // Ensure the appointment date is in proper format (YYYY-MM-DD)
       setValue("appointmentDate", dealData.appointmentDate.split("T")[0]);
       setValue("specialInstructions", dealData.specialInstructions);
       setValue("price", dealData.price);

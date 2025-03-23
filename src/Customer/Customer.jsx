@@ -1,20 +1,21 @@
 import { ChevronDown, Funnel, Image, PenLine } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { fetchCustomers } from "../redux/features/customerReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDeals } from "../../redux/features/dealsReducer";
-import { openDealModal } from "../../redux/features/dealModalReducer";
+import { openCustomerModal } from "../redux/features/customerModalReducer";
 
-const Deals = () => {
-  const dispatch = useDispatch();
-  const { deals } = useSelector((state) => state.deals);
-  const [isOpen, setIsOpen] = useState(false);
-  const [visible, setVisible] = useState(8);
-  const loadMore = () => {
-    setVisible((prevVisible) => prevVisible + 5);
-  };
-  useEffect(() => {
-    dispatch(fetchDeals());
-  }, [dispatch]);
+const Customer = () => {
+ const [isOpen, setIsOpen] = useState(false);
+ const dispatch = useDispatch();
+ const { customers} = useSelector((state) => state.customers);
+ const [visible, setVisible] = useState(8);
+ const loadMore = () => {
+   setVisible((prevVisible) => prevVisible + 5);
+ };
+
+ useEffect(() => {
+   dispatch(fetchCustomers());
+ }, [dispatch]);
   return (
     <section className="p-10 relateve">
       <div className="flex justify-between items-center">
@@ -68,6 +69,7 @@ const Deals = () => {
               </ul>
             </div>
           )}
+          
           <button className="text-[#092C4C] bg-white border border-[#EAEEF4] rounded-full font-medium text-sm px-5 py-2.5 text-center inline-flex items-center ms-3">
             filtter <Funnel size={15} className="ms-2" />
           </button>
@@ -85,17 +87,15 @@ const Deals = () => {
                 Name
               </th>
               <th scope="col" className="px-6 py-3">
-                Area
+               Email
               </th>
               <th scope="col" className="px-6 py-3">
-                Appointment Date
+                Phone
               </th>
               <th scope="col" className="px-6 py-3">
-                Price
+                Address
               </th>
-              <th scope="col" className="px-6 py-3">
-                Status
-              </th>
+             
               <th scope="col" className="px-6 py-3">
                 Edit
               </th>
@@ -103,39 +103,30 @@ const Deals = () => {
           </thead>
 
           <tbody>
-            {deals.slice(0, visible).map((deal, idx) => (
-              <tr key={idx} className="bg-white border-b  border-gray-200  ">
+          {customers.slice(0, visible).map((customer, idx) => (
+              <tr key={idx} className="bg-white border-b border-gray-200">
                 <td className="w-4 p-4">
                   <div className="w-10 h-10 rounded-full bg-[#D6E1E6]" />
                 </td>
                 <th
                   scope="row"
-                  className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap "
+                  className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap"
                 >
                   <div className="font-normal text-gray-500">
-                    {deal.streetAddress}
+                    {customer.firstName}
                   </div>
                 </th>
-                <td className="px-6 py-4">{deal.roomArea}</td>
-                <td className="px-6 py-4">{deal.appointmentDate}</td>
-                <td className="px-6 py-4">{deal.price}</td>
-                <td className="px-6 py-4">
-                  <div
-                    type="button"
-                    className="text-[#514EF3] bg-[#ECECFE] font-medium rounded-full text-[10px] px-5 py-2.5 text-center me-2  "
-                  >
-                    {deal.progress}
-                  </div>
-                </td>
-
+                <td className="px-6 py-4">{customer.email}</td>
+                <td className="px-6 py-4">{customer.phone}</td>
+                <td className="px-6 py-4">{customer.state} {customer.streetAddress}</td>
                 <td className="px-6 py-4">
                   <button
                     onClick={() =>
                       dispatch(
-                        openDealModal({
-                          modalType: "editDeal",
-                          dealData: deal,
-                        }),
+                        openCustomerModal({
+                          modalType: "editCustomer",
+                          customerData: customer,
+                        })
                       )
                     }
                   >
@@ -144,10 +135,12 @@ const Deals = () => {
                 </td>
               </tr>
             ))}
+
+            
           </tbody>
         </table>
-        {visible < deals.length && (
-          <div className="flex justify-center my-4 ">
+        {visible < customers.length && (
+          <div className="flex justify-center my-4">
             <button
               onClick={loadMore}
               className="px-4 py-2 bg-[#514EF3] text-white rounded-full disabled:opacity-50"
@@ -161,4 +154,4 @@ const Deals = () => {
   );
 };
 
-export default Deals;
+export default Customer;

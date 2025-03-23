@@ -11,6 +11,8 @@ import Deals from "./components/Deals/Deals";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import DealModal from "./components/Deals/DealModal/DealModal";
 import DealDetails from "./components/Deals/DealDetails/DealDetails";
+import CustomerModal from "./Customer/CustomerModal/CustomerModal";
+import Customer from "./Customer/Customer";
 
 function App() {
   const router = createBrowserRouter([
@@ -44,6 +46,10 @@ function App() {
           path: "deals/:id",
           element: <DealDetails />,
         },
+        {
+          path: "customers",
+          element: <Customer />,
+        },
       ],
     },
   ]);
@@ -68,6 +74,7 @@ function App() {
       />
       <RouterProvider router={router}></RouterProvider>
       <DealModal />
+      <CustomerModal />
     </div>
   );
 }

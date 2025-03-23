@@ -10,6 +10,7 @@ import { fetchDeals } from "../../redux/features/dealsReducer";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { deals } = useSelector((state) => state.deals);
+   const { customers} = useSelector((state) => state.customers);
   useEffect(() => {
     dispatch(fetchDeals());
   }, [dispatch]);
@@ -18,11 +19,11 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 xl:grid-cols-[40%60%] h-full gap-2 lg:gap-5 ms-5 mt-5">
         <NextAppointment deals={deals.slice(0, 1)} />
         <RecentDeals deals={deals.slice(0, 4)} />
-        <CustomersAndDeals deals={deals.length} customers={0}/>
+        <CustomersAndDeals deals={deals.length} customers={customers.length} />
         <DealStatus deals={deals.slice(0, 1)} />
       </div>
 
-      <Caustomers customers={0} activity={0}/>
+      <Caustomers customers={customers.slice(0, 4)} activity={0} dispatch={dispatch}/>
     </div>
   );
 };
