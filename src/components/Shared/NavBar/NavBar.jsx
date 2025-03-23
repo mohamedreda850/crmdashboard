@@ -13,11 +13,19 @@ import avatar from "./../../../assets/Images/Avatar.png";
 import { useDispatch } from "react-redux";
 import { openDealModal } from "../../../redux/features/dealModalReducer";
 import { openCustomerModal } from "../../../redux/features/customerModalReducer";
+import { useLocation } from "react-router-dom";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch();
-
+  const location = useLocation(); 
+  const getPageTitle = () => {
+    if (location.pathname === "/dashboard") return "Dashboard";
+    if (location.pathname === "/dashboard/deals") return "Deals";
+    if (location.pathname.startsWith("/dashboard/deals/")) return "Deal Details";
+    if (location.pathname === "/dashboard/customers") return "Customers";
+    return "CRM System"; 
+  };
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
   };
@@ -32,7 +40,7 @@ const NavBar = () => {
     <nav className="bg-[#F6FAFDE5] ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <span className="self-center text-xl font-semibold whitespace-nowrap">
-          Dashboard
+        {getPageTitle()}
         </span>
 
         <button
